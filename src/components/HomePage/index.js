@@ -29,10 +29,10 @@ class HomePage extends React.Component {
     let sortType;
     if (keyName === this.state.sortColumn) {
       sortType = this.toggleSortType();
-      this.props.sortTable(this.props.tableData, keyName, sortType);
+      this.props.sortTable(keyName, sortType);
     } else {
       sortType = "ASC";
-      this.props.sortTable(this.props.tableData, keyName, sortType);
+      this.props.sortTable(keyName, sortType);
     }
     this.setState({ sortType, sortColumn: keyName });
   };

@@ -51,15 +51,9 @@ export function pagination (pageNo) {
     }
 }
 
-export function sortTable (data, key, order = 'ASC') {
+export function sortTable (key, order = 'ASC') {
     return dispatch => {
-        // sort the data as per key and dispatch action
-        const sortedArray = data.sort((a, b) => {
-            const val = typeof a[key] === 'string' ? a[key].localeCompare(b[key]) : a[key] - b[key];
-            if (order === 'ASC') return val;
-            else return -val;
-        });
-        dispatch(sortAction(sortedArray));
+        dispatch(sortAction({ order, key }));
     }
 }
 
