@@ -28,7 +28,7 @@ export const COLUMNS = {
     sortable: false
   },
   actions:{
-    label: "",
+    label: "Actions",
     sortable: false,
     isAction: true
   }
