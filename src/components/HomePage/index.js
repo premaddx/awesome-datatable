@@ -96,7 +96,7 @@ class HomePage extends React.Component {
   getActions = () => {
     return [
       {
-        label: "View",
+        label: "Open",
         cb: this.openView
       },
       {
