@@ -8,7 +8,6 @@ import {
 const filterRecords = (state) => {
   const lastIndex = state.currentPage * state.pageSize;
   const startIndex = lastIndex - state.pageSize;
-  console.log(state);
   const tableData = state.data.slice(startIndex, lastIndex);
   return {
     ...state,

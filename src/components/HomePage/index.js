@@ -1,22 +1,20 @@
 import React from "react";
 import { connect } from "react-redux";
+import { withRouter } from "react-router";
 import {
   sortTable,
   fetchTableData,
   deleteEmployee,
   pagination
 } from "../../redux/actions/datatable-action";
-import Modal from "../Modal";
 import Table from "../Table";
-import { MODAL, COLUMNS, View } from "./constants";
+import { COLUMNS } from "./constants";
 import "./style.css";
 
 class HomePage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isOpen: false,
-      modalView: MODAL.VIEW,
       active: null,
       sortType: "ASC",
       sortColumn: "id"
@@ -90,39 +88,16 @@ class HomePage extends React.Component {
     );
   };
 
-  getModalView = () => {
-    const { active: a, modalView } = this.state;
-    if (!a) return [];
-    switch (modalView) {
-      case MODAL.VIEW: {
-        return <View a={a} />;
-      }
-      default:
-        return [];
-    }
-  };
-
-  onActiveChange = (name, value) => {
-    if (!this.state.active) return;
-    let a = { ...this.state.active };
-    a[name] = value;
-    a.preferredFullName = a.firstName + " " + a.lastName;
-    this.setState({ active: a });
-  };
-
-  openModal = modalView => active => { // from where active is coming ??
-    this.setState({ isOpen: true, modalView, active: active || {} });
-  };
-
-  closeModal = () => {
-    this.setState({ isOpen: false });
+  openView = (obj = {}) => {
+    if (Object.keys(obj).length === 0) return [];
+    this.props.history.push(`/users/${obj.id}`, obj);
   };
 
   getActions = () => {
     return [
       {
         label: "View",
-        cb: this.openModal(MODAL.VIEW)
+        cb: this.openView
       },
       {
         label: "Delete",
@@ -143,11 +118,6 @@ class HomePage extends React.Component {
           fixedHeader={true}
         />
         <div>{this.renderPaginationDropdown()}</div>
-        {this.state.isOpen ? (
-          <Modal close={this.closeModal}>{this.getModalView()}</Modal>
-        ) : (
-          ""
-        )}
       </div>
     );
   }
@@ -166,7 +136,7 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(
+export default withRouter(connect(
   mapStateToProps,
   {
     sortTable,
@@ -174,4 +144,4 @@ export default connect(
     fetchTableData,
     deleteEmployee
   }
-)(HomePage);
+)(HomePage));

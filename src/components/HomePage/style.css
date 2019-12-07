@@ -81,40 +81,6 @@ a.sort-by:after {
   margin: 0 5px;
 }
 
-.search {
-  width: 200px;
-  display: inline-block;
-  margin: 0;
-}
-
-.view-list {
-  list-style-type: none;
-  padding: 0;
-  border-top: 1px solid #ededed;
-  padding: 30px;
-}
-
-.view-list > li {
-  display: flex;
-  justify-content: space-between;
-  margin: 15px 0;
-}
-
-.view-list > li > div {
-  flex-grow: 1;
-  flex-basis: 0;
-}
-
-.header-section {
-  padding: 15px 30px;
-}
-
-.modal-header {
-  font-size: 23px;
-  font-weight: bold;
-  margin-top: 5px;
-}
-
 .label {
   color: #afafaf;
 }

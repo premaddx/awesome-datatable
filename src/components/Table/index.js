@@ -32,8 +32,8 @@ export default class Table extends React.Component {
               return (
                 <tr key={obj.id}>
                   <td>{obj.email}</td>
-                  <td>{obj.name}</td>
                   <td>{obj.username}</td>
+                  <td>{obj.name}</td>
                   <td>{obj.address && `${obj.address.suite} ${obj.address.street} ${obj.address.city} ${obj.address.zipcode}`}</td>
                   <td>{obj.phone}</td>
                   <td>{obj.website}</td>
@@ -45,6 +45,7 @@ export default class Table extends React.Component {
                           <button
                             type="button"
                             onClick={this.callAction(k.cb, obj)}
+                            key={k.label}
                           >
                             {k.label}
                           </button>
