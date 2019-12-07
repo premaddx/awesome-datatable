@@ -4,6 +4,8 @@ import "./style.css";
 
 function UserInfo (props) {
     const obj = props.history.location.state;
+    const handleClick = () => props.history.push('/');
+
     return (
         <div>
             <div className="header-section">
@@ -35,6 +37,7 @@ function UserInfo (props) {
                     <div className="value">{obj.company && obj.company.name}</div>
                 </li>
             </ul>
+            <button onClick={handleClick}>Back</button>
         </div>
     );
 }
