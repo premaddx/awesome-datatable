@@ -22,7 +22,7 @@ class HomePage extends React.Component {
   }
 
   componentDidMount() {
-    this.props.fetchTableData();
+    if(this.props.tableData.length === 0) this.props.fetchTableData();
   }
 
   handleSortTable = keyName => () => {
