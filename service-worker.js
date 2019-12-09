@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/awesome-datatable/precache-manifest.d888127530b62fc1749b9b3b11b6b467.js"
+  "/awesome-datatable/precache-manifest.32eb1eb265a587186a835472cf4dd6c8.js"
 );
 
 self.addEventListener('message', (event) => {
