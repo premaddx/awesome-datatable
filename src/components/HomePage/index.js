@@ -5,6 +5,7 @@ import {
   sortTable,
   fetchTableData,
   deleteEmployee,
+  changePageSize,
   pagination
 } from "../../redux/actions/datatable-action";
 import Table from "../Table";
@@ -16,6 +17,7 @@ class HomePage extends React.Component {
     super(props);
     this.state = {
       active: null,
+      pageSize: '',
       sortType: "ASC",
       sortColumn: "id"
     };
@@ -23,6 +25,7 @@ class HomePage extends React.Component {
 
   componentDidMount() {
     if(this.props.tableData.length === 0) this.props.fetchTableData();
+    this.setState({ pageSize: this.props.pageSize });
   }
 
   handleSortTable = keyName => () => {
@@ -48,8 +51,17 @@ class HomePage extends React.Component {
     this.props.pagination(e.target.value);
   };
 
+  handleInputChange = (e) => {
+    const { value } = e.target;
+    this.setState({ pageSize: value });
+  }
+
+  handlePageSizeChange = () => {
+    // take the value from this.state
+    this.props.changePageSize(this.state.pageSize);
+  }
+
   renderPaginationDropdown = () => {
-    const arr = [];
     const currentPage =
       this.props.currentPage && parseInt(this.props.currentPage, 10);
     const totalPages =
@@ -57,16 +69,25 @@ class HomePage extends React.Component {
     const numberOfButtons =
         this.props.numberOfButtons && parseInt(this.props.numberOfButtons, 10);
     const limit = currentPage + numberOfButtons <= totalPages ? currentPage + numberOfButtons : totalPages;
-    for (let i = currentPage; i <= limit; i++) arr.push(i);
+    // push the content into the array
+    const arr = [currentPage];
+    // left side of the centre
+    for (let i = 1; i <= Math.floor(numberOfButtons/2); i++) {
+      if (arr[0] > 1) arr.unshift(arr[0] - 1);
+    }
+    // right side of the centre
+    while(arr.length < numberOfButtons && arr[arr.length - 1] < limit) arr.push(arr[arr.length - 1] + 1);
+    // for edge case - insert element in the front
+    while(arr.length < numberOfButtons && arr[0] > 1) arr.unshift(arr[0] - 1);
     return (
       <div>
-        <button
+        {currentPage === 1 ? null : <button
           type="button"
           onClick={this.handlePaginationChange}
           value={currentPage - 1 > 0 ? currentPage - 1 : currentPage}
         >
           Previous
-        </button>
+        </button>}
         {arr.map(val => (
           <button
             type="button"
@@ -77,13 +98,13 @@ class HomePage extends React.Component {
             {val}
           </button>
         ))}
-        <button
+        {currentPage === limit ? null : <button
           type="button"
           onClick={this.handlePaginationChange}
           value={currentPage + 1 <= limit ? currentPage + 1 : currentPage}
         >
           Next
-        </button>
+        </button>}
       </div>
     );
   };
@@ -110,6 +131,10 @@ class HomePage extends React.Component {
     const { tableData } = this.props;
     return (
       <div className="body-container">
+        <div>
+          Number of Records: <input type='text' value={this.state.pageSize} onChange={this.handleInputChange}></input>
+          <button onClick={this.handlePageSizeChange}>Show</button>
+        </div>
         <Table
           actions={this.getActions()}
           data={tableData}
@@ -142,6 +167,7 @@ export default withRouter(connect(
     sortTable,
     pagination,
     fetchTableData,
+    changePageSize,
     deleteEmployee
   }
 )(HomePage));

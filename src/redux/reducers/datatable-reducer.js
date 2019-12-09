@@ -2,6 +2,7 @@ import {
   DELETE,
   SORT,
   PAGINATION,
+  CHANGE_PAGE_SIZE,
 } from "../action-constants";
 
 
@@ -47,6 +48,9 @@ export default function dataTableReducer (state = INITIAL_STATE, action) {
     case PAGINATION: {
       state.currentPage = action.data.pageNo;
       return filterRecords(state);
+    }
+    case CHANGE_PAGE_SIZE: {
+      return filterRecords({ ...state, ...action.data });
     }
     default:
       if (action.data) {

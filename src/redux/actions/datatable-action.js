@@ -2,6 +2,7 @@ import {
     DELETE,
     SORT,
     PAGINATION,
+    CHANGE_PAGE_SIZE,
     DEFAULT,
 } from '../action-constants';
 
@@ -29,6 +30,13 @@ function deleteAction (data) {
     }
 }
 
+function changePageSizeAction(data) {
+    return {
+        type: CHANGE_PAGE_SIZE,
+        data
+    }
+}
+
 
 function paginationAction (data) {
     return {
@@ -48,6 +56,12 @@ export function fetchTableData () {
 export function pagination (pageNo) {
     return dispatch => {
         dispatch(paginationAction({ pageNo }));
+    }
+}
+
+export function changePageSize (pageSize) {
+    return dispatch => {
+        dispatch(changePageSizeAction({ pageSize }));
     }
 }
 
